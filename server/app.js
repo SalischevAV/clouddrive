@@ -7,6 +7,15 @@ const routes = require('./routes');
 
 const PORT = config.get('serverPort');
 
+app.use((req, res, next)=>{
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Contetnt-type, Accept');
+    app.options((req,res)=>{
+        res.set('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
+        res.send();
+    });
+    next();
+})
 app.use(express.json());
 app.use('/api/auth/', routes.authRouter)
 

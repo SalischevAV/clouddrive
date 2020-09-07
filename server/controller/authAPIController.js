@@ -18,7 +18,7 @@ module.exports.registration =async (req, res)=>{
 
         if(candidate){
             return res.status(400)
-                    .json({messge: `User with email ${email} already exist`});
+                    .json({message: `User with email ${email} already exist`});
         }
         const hashPassword = await bcrypt.hash(password, 8);
         const user = new User({email, password: hashPassword});
