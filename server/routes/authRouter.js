@@ -1,6 +1,7 @@
 const authRouter = require('express').Router();
 const authAPIController = require('../controller/authAPIController');
 const {check} = require('express-validator');
+const authMiddleware = require('../middleware/auth');
 
 
 authRouter.post('/registration',[
@@ -9,6 +10,7 @@ authRouter.post('/registration',[
 ], authAPIController.registration);
 
 authRouter.post('/login',authAPIController.login);
+authRouter.get('/login',authMiddleware, authAPIController.auth);
 
 
 module.exports = authRouter;

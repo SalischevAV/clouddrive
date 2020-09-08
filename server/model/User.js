@@ -1,5 +1,4 @@
 const  {Schema, model, ObjectId }= require ('mongoose');
-const mongoose = require('mongoose');
 
 const UserSchema = new Schema({
     email:{
@@ -30,4 +29,4 @@ const UserSchema = new Schema({
     }]
 },{versionKey: false});
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = model('User', UserSchema);

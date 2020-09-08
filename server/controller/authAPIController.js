@@ -10,7 +10,7 @@ module.exports.registration =async (req, res)=>{
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400)
-                    .json({message: 'Bad request', errors});
+                    .json({message: 'Invalid email or password', errors});
         }
 
         const {email, password} = req.body;
@@ -65,5 +65,29 @@ module.exports.login =async (req, res)=>{
     catch(err){
         console.log('Registration error: ', err);
         res.send({message: 'Server error'});
+    }
+}
+
+module.exports.auth =async (req, res)=>{
+    
+    try{
+        const user = await User.findById(req.user.id);
+        console.log('user', user)
+        const token = jwt.sign({id:user.id}, config.get('secretKey'), {expiresIn: '1h'});
+        return res.json({
+                    token,
+                    user: {
+                        id: user.id,
+                        email: user.email,
+                        diskSpace: user.diskSpace,
+                        usedSpace: user.usedSpace,
+                        avatar: user.avatar,
+                    }
+                })
+
+    }
+    catch(err){
+        console.log('Auth error: ', err);
+        res.send({message: 'Auth error(controller)'});
     }
 }
