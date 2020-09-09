@@ -1,4 +1,4 @@
-<mxfile host="af964da7-48ef-4a5e-8d11-02b59eff48a2" modified="2020-09-08T17:36:56.105Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.48.2 Chrome/78.0.3904.130 Electron/7.3.2 Safari/537.36" etag="QOAsi6VbI1Q5yPabiWG1" version="13.6.5">
+<mxfile host="af964da7-48ef-4a5e-8d11-02b59eff48a2" modified="2020-09-08T18:37:43.377Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.48.2 Chrome/78.0.3904.130 Electron/7.3.2 Safari/537.36" etag="Xq6vezIpuXSytFradYNg" version="13.6.5">
     <diagram id="cyjniA0ZzOJgdNBzTKtN" name="Page-1">
         <mxGraphModel dx="1023" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
@@ -34,7 +34,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="_So2VJrC17p1mw5BTz6b-21" value="File" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">
-                    <mxGeometry x="590" y="90" width="160" height="266" as="geometry"/>
+                    <mxGeometry x="590" y="90" width="160" height="296" as="geometry"/>
                 </mxCell>
                 <mxCell id="_So2VJrC17p1mw5BTz6b-22" value="id: ObjectID" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="_So2VJrC17p1mw5BTz6b-21" vertex="1">
                     <mxGeometry y="26" width="160" height="30" as="geometry"/>
@@ -59,6 +59,9 @@
                 </mxCell>
                 <mxCell id="_So2VJrC17p1mw5BTz6b-27" value="parent_id: ObjectID FK" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="_So2VJrC17p1mw5BTz6b-21" vertex="1">
                     <mxGeometry y="236" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="childs_id: [ObjectID] FK" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="_So2VJrC17p1mw5BTz6b-21">
+                    <mxGeometry y="266" width="160" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

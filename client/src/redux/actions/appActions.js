@@ -1,4 +1,4 @@
-import {SHOW_ALERT, HIDE_ALERT} from '../types';
+import {SHOW_ALERT, HIDE_ALERT, SHOW_POPUP} from '../types';
 
 
 export function showAlert(alert){
@@ -17,5 +17,12 @@ export function showAlert(alert){
 export function hideAlert(){
     return {
         type: HIDE_ALERT,
+    }
+}
+
+export function showPopup(display){
+    return{
+        type: SHOW_POPUP,
+        payload: display
     }
 }

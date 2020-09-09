@@ -2,5 +2,6 @@
     "serverPort": 5000,
     "dbUrl": "mongodb+srv://salischevav:H2Xd2Baz76@clouddrivecluster.pnafz.mongodb.net/clouddrive?retryWrites=true&w=majority",
     "dbName":"clouddrive",
-    "secretKey": "You need MongoDB set up and running to run the code locally"
+    "secretKey": "You need MongoDB set up and running to run the code locally",
+    "filePath": "C:\\Users\\devor\\Documents\\React2020\\clouddrive\\server\\files"
 }
