@@ -75,7 +75,6 @@ module.exports.auth =async (req, res)=>{
     
     try{
         const user = await User.findById(req.user.id);
-        console.log('user', user)
         const token = jwt.sign({id:user.id}, config.get('secretKey'), {expiresIn: '1h'});
         return res.json({
                     token,
