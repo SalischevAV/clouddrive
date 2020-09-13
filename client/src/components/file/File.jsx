@@ -9,6 +9,7 @@ import {
 import "./file.css";
 import dirLogo from "../../assets/img/dir.svg";
 import fileLogo from "../../assets/img/file.svg";
+import sizeFormat from '../../utils/sizeFormat';
 
 function File({ file }) {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function File({ file }) {
       />
       <div className="file__name">{file.name}</div>
       <div className="file__date">{file.data.slice(0, 10)}</div>
-      <div className="file__size">{file.size}</div>
+      <div className="file__size">{sizeFormat(file.size)}</div>
       {file.type !== "dir" && (
         <button
           className="file__btn file__download"

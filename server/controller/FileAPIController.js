@@ -32,7 +32,21 @@ class FileAPIController {
 
     async getFiles(req, res) {
         try {
-            const files = await File.find({ user: req.user.id, parent: req.query.parent });
+            const { sort } = req.query;
+            let files;
+            switch (sort) {
+                case 'name': files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({name:1});
+                break;
+                case 'type':files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({type:1});
+                break;
+                case 'date':files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({date:1});
+                break;
+                case 'size':files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({size:1});
+                break;
+                default: files = await File.find({ user: req.user.id, parent: req.query.parent });
+                    break;
+            }
+
             return res.json(files);
         }
         catch (err) {
@@ -76,13 +90,13 @@ class FileAPIController {
             }
 
             let fileObj = {
-                    name: file.name,
-                    type,
-                    size: file.size,
-                    path: filePath,
-                    user: user._id
+                name: file.name,
+                type,
+                size: file.size,
+                path: filePath,
+                user: user._id
             }
-            if(parent){
+            if (parent) {
                 fileObj = {
                     name: file.name,
                     type,
@@ -93,7 +107,7 @@ class FileAPIController {
                 }
             }
             const dbFile = new File(fileObj);
-                                     
+
             await dbFile.save();
             await user.save();
 
@@ -107,39 +121,53 @@ class FileAPIController {
         }
     }
 
-    async downloadFile(req, res){
-        try{
-            const file = await File.findOne({_id: req.query.id, user: req.user.id});
+    async downloadFile(req, res) {
+        try {
+            const file = await File.findOne({ _id: req.query.id, user: req.user.id });
             const path = config.get('filePath') + '\\' + req.user.id + '\\' + file.path;
-            if(fs.existsSync(path)){
+            if (fs.existsSync(path)) {
                 return res.download(path, file.name);
             } else {
                 return res.status(400)
-                .json({ message: 'File not found' });
+                    .json({ message: 'File not found' });
             }
 
-        } catch(err){
+        } catch (err) {
             console.log(err);
             return res.status(500)
                 .json({ message: 'Download error' });
         }
     }
 
-    async deleteFile(req, res){
-        try{
-            const file = await File.findOne({_id: req.query.id, user: req.user.id});
-            if(!file){
+    async deleteFile(req, res) {
+        try {
+            const file = await File.findOne({ _id: req.query.id, user: req.user.id });
+            if (!file) {
                 return res.status(400)
                     .json({ message: 'File not found' });
             }
             fileService.deleteFile(file);
             await file.remove();
-            return res.json({message: 'File was deleted'});
+            return res.json({ message: 'File was deleted' });
         }
-        catch(err){
+        catch (err) {
+            console.log(err);
+            return res.status(400)
+                .json({ message: 'File not empty' });
+        }
+    }
+
+    async searchFile(req, res){
+        try{
+            const searchWord = req.query.search;
+            let files = await File.find({user: req.user.id});
+            files = files.filter(file =>file.name.includes(searchWord));
+            return res.json(files);
+
+        }catch(err){
             console.log(err);
             return res.status(500)
-                .json({ message: 'File not empty' });
+                .json({ message: 'Search error' });
         }
     }
 

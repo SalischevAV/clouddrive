@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch} from 'react-redux';
 import { removeUploadFile } from '../../redux/actions/uploaderAction';
+import sizeFormat from '../../utils/sizeFormat';
 import "./uploadFile.css";
 
 function UploadFile({ file }) {
@@ -8,7 +9,7 @@ function UploadFile({ file }) {
   return (
     <div className="upload-file">
       <div className="upload-file__header">
-        <div className="upload-file__name">{file.name}</div>
+  <div className="upload-file__name">{file.name +" " + sizeFormat(file.size)}</div>
         <button className="upload-file__remove" onClick={()=>dispatch(removeUploadFile(file.id))}>X</button>
       </div>
       <div className="upload-file__progress-bar">
