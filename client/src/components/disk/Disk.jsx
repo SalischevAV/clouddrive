@@ -5,6 +5,7 @@ import { showPopup } from '../../redux/actions/appActions'
 import FileList from '../filelist/FileList';
 import Popup from '../popup/Popup';
 import './disk.css';
+import Uploader from '../uploader/Uploader';
 
 function Disk() {
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function Disk() {
             </div>
             <FileList />
             <Popup />
+            <Uploader />
         </div>
         :
         <div className='drop-area' onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}> 

@@ -1,6 +1,7 @@
-import { SET_FILES, SET_CURRENT_DIR, ADD_FILE, PUSH_TO_STACK, POP_FROM_STACK } from '../types';
+import { SET_FILES, SET_CURRENT_DIR, ADD_FILE, PUSH_TO_STACK, DELETE_FILE } from '../types';
 import axios from 'axios';
 import { showAlert } from './appActions';
+import { addUploadFile, showUploader, changeUploadFile } from './uploaderAction';
 
 
 export function setFiles(files) {
@@ -71,6 +72,10 @@ export function uploadFile(file, dirId,) {
                 formData.append('parent', dirId);
             }
 
+            const uploadFile = {name: file.name, progress: 0, id: Date.now()};
+            dispatch(showUploader());
+            dispatch(addUploadFile(uploadFile));
+
             const response = await axios.post('http://localhost:5000/api/files/upload', formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                 onUploadProgress: progressEvent => {
@@ -80,8 +85,8 @@ export function uploadFile(file, dirId,) {
                         progressEvent.target.getResponseHeader('x-decompressed-content-length');
                     console.log('total', totalLength);
                     if (totalLength) {
-                        let progress = Math.round((progressEvent.loaded * 100) / totalLength);
-                        console.log(progress);
+                        uploadFile.progress = Math.round((progressEvent.loaded * 100) / totalLength);
+                        dispatch(changeUploadFile(uploadFile));
                     }
                 }
             });
@@ -108,5 +113,28 @@ export async function downloadFile(file){
         document.body.appendChild(link);
         link.click();
         link.remove();
+    }
+}
+
+export function deleteFile(file){
+    return async dispatch =>{
+        try{
+            const response = await axios.delete(`http://localhost:5000/api/files?id=${file._id}`, {
+              headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            })
+            dispatch(delFile(file._id));
+            dispatch(showAlert(response.data.message))
+        } catch(err)
+        {
+            dispatch(showAlert(err.response.data.message))
+        }
+    }
+
+}
+
+export function delFile(dirId){
+    return {
+        type: DELETE_FILE,
+        payload: dirId
     }
 }

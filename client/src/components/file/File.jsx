@@ -4,6 +4,7 @@ import {
   setCurrentDir,
   pushToStack,
   downloadFile,
+  deleteFile,
 } from "../../redux/actions/filesAction";
 import "./file.css";
 import dirLogo from "../../assets/img/dir.svg";
@@ -24,6 +25,11 @@ function File({ file }) {
     downloadFile(file);
   }
 
+  function deleteClickHandler(event) {
+    event.stopPropagation();
+    dispatch(deleteFile(file));
+  }
+
   return (
     <div className="file" onClick={() => openDirHandler()}>
       <img
@@ -42,7 +48,12 @@ function File({ file }) {
           download
         </button>
       )}
-      <button className="file__btn file__delete">delete</button>
+      <button
+        className="file__btn file__delete"
+        onClick={(event) => deleteClickHandler(event)}
+      >
+        delete
+      </button>
     </div>
   );
 }
