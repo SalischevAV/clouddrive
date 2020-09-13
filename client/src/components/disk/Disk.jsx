@@ -5,7 +5,7 @@ import {
   uploadFile,
   setCurrentDir,
 } from "../../redux/actions/filesAction";
-import { showPopup } from "../../redux/actions/appActions";
+import { showPopup, setView } from "../../redux/actions/appActions";
 import FileList from "../filelist/FileList";
 import Popup from "../popup/Popup";
 import "./disk.css";
@@ -102,6 +102,8 @@ function Disk() {
           <option value="date">by date</option>
           <option value="size">by size</option>
         </select>
+        <button className="disk__plate" onClick={()=>dispatch(setView('plate'))}></button>
+        <button className="disk__list" onClick={()=>dispatch(setView('list'))}></button>
       </div>
       <FileList />
       <Popup />

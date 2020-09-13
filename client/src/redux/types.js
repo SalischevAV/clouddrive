@@ -3,6 +3,7 @@ export const HIDE_ALERT = 'APP/HIDE_ALERT';
 export const SHOW_POPUP = 'APP/SHOW_POPUP';
 export const SHOW_LOADER = 'APP/SHOW_LOADER';
 export const HIDE_LOADER = 'APP/HIDE_LOADER';
+export const SET_VIEW = 'APP/SET_VIEW';
 
 
 

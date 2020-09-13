@@ -1,9 +1,10 @@
-import { SHOW_ALERT, HIDE_ALERT, SHOW_POPUP, SHOW_LOADER, HIDE_LOADER } from '../types';
+import { SHOW_ALERT, HIDE_ALERT, SHOW_POPUP, SHOW_LOADER, HIDE_LOADER, SET_VIEW } from '../types';
 
 const initialState = {
     alert: null,
     popupDisplay: 'none',
     loader: false,
+    view: 'list',
 }
 
 export const appReducer = (state = initialState, action) => {
@@ -18,6 +19,8 @@ export const appReducer = (state = initialState, action) => {
             return { ...state, loader: true };
         case HIDE_LOADER:
             return { ...state, loader: false };
+        case SET_VIEW:
+            return {...state, view:action.payload};
         default: return state;
     }
 }
