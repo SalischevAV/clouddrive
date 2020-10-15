@@ -25,7 +25,7 @@ module.exports.registration =async (req, res)=>{
         const hashPassword = await bcrypt.hash(password, 8);
         const user = new User({email, password: hashPassword});
         await user.save();
-        await fileService.createDir(new File({user:user._id, name:''}));
+        await fileService.createDir(req, new File({user:user._id, name:''}));
         return res.status(201)
                 .json({message:'User was created'});
 
@@ -92,4 +92,6 @@ module.exports.auth =async (req, res)=>{
         console.log('Auth error: ', err);
         res.send({message: 'Auth error(controller)'});
     }
+
+    
 }

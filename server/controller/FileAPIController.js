@@ -2,8 +2,7 @@ const fileService = require('../services/FileService');
 const config = require('config');
 const fs = require('fs');
 const File = require('../model/File');
-const User = require('../model/User');
-const Uuid = require('uuid');
+const User = require('../model/User')
 
 class FileAPIController {
     async createDir(req, res) {
@@ -73,9 +72,9 @@ class FileAPIController {
 
             let path;
             if (parent) {
-                path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`;
+                path = `${req.filePath}\\${user._id}\\${parent.path}\\${file.name}`;
             } else {
-                path = `${config.get('filePath')}\\${user._id}\\${file.name}`;
+                path = `${req.filePath}\\${user._id}\\${file.name}`;
             }
 
             if (fs.existsSync(path)) {
@@ -103,7 +102,7 @@ class FileAPIController {
                     type,
                     size: file.size,
                     path: filePath,
-                    parent: parent._id,
+                    parent: parent ? parent._id : null,
                     user: user._id
                 }
             }
@@ -125,8 +124,7 @@ class FileAPIController {
     async downloadFile(req, res) {
         try {
             const file = await File.findOne({ _id: req.query.id, user: req.user.id });
-            // const path = config.get('filePath') + '\\' + req.user.id + '\\' + file.path;
-            const path = fileService.getPath(file);
+            const path = fileService.getPath(req, file);
 
             if (fs.existsSync(path)) {
                 return res.download(path, file.name);
@@ -149,7 +147,7 @@ class FileAPIController {
                 return res.status(400)
                     .json({ message: 'File not found' });
             }
-            fileService.deleteFile(file);
+            fileService.deleteFile(req, file);
             await file.remove();
             return res.json({ message: 'File was deleted' });
         }
@@ -169,11 +167,10 @@ class FileAPIController {
 
         }catch(err){
             console.log(err);
-            return res.status(400)
+            return res.status(500)
                 .json({ message: 'Search error' });
         }
     }
-
     async uploadAvatar(req, res){
         try{
             const file = req.files.file;

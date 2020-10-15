@@ -5,13 +5,16 @@ const mongoose = require('mongoose');
 const config = require('config');
 const routes = require('./routes');
 const corsMiddleware = require('./middleware/cors');
+const filePathMiddleware = require('./middleware/filePath');
+const path = require('path');
 
 
-const PORT = config.get('serverPort');
+const PORT = process.env.PORT || config.get('serverPort');
 
 
 app.use(fileUpload({}));
 app.use(corsMiddleware);
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')));
 app.use(express.json());
 app.use(express.static('static'));
 app.use('/api/auth', routes.authRouter);
