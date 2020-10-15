@@ -7,6 +7,7 @@ import Registration from "./../auth/Registration";
 import Authorization from "./../auth/Authorization";
 import Disk from '../disk/Disk'
 import Alert from "./../common/Alert";
+import Profile from '../profile/Profile';
 import { auth } from '../../redux/actions/userActions';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             :
             <Switch>
               <Route exact path="/" component={Disk} />
+              <Route exact path="/profile" component={Profile} />
               <Redirect to='/' />
             </Switch>
           }

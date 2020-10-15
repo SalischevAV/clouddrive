@@ -5,14 +5,19 @@ import "./navbar.css";
 import Logo from "../../assets/img/navbar_logo.svg";
 import { logoutUser } from "../../redux/actions/userActions";
 import { searchFile, getFiles } from '../../redux/actions/filesAction';
+import { API_URL } from '../../config';
 import { showLoader } from '../../redux/actions/appActions';
+import defaultAvatar from '../../assets/img/defaultAvatar.svg';
 
 export default () => {
   const [searchWord, setSearchWord] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(false);
+  const currentUser = useSelector(state => state.user.currentUser)
   const currentDir = useSelector(state=> state.files.currentDir);
   const isAuth = useSelector((state) => state.user.isAuth);
   const dispatch = useDispatch();
+
+  const avatar = currentUser.avatar ? `${API_URL + currentUser.avatar}` : defaultAvatar;
 
 
   const searchChangeGandler = (event)=>{
@@ -31,8 +36,10 @@ export default () => {
   return (
     <div className="navbar">
       <div className="container">
-        <img src={Logo} alt="navbar_logo" className="navbar__logo" />
-        <div className="navbar__header">Cloud Drive</div>
+        <NavLink to='/' className="container">
+          <img src={Logo} alt="navbar_logo" className="navbar__logo" />
+          <div className="navbar__header">Cloud Drive</div>
+        </NavLink>
 
         {isAuth && (
           <input
@@ -43,6 +50,7 @@ export default () => {
             onChange={(event) => searchChangeGandler(event)}
           />
         )}
+
         {!isAuth && (
           <div className="navbar__login">
             <NavLink to="/login">Login</NavLink>
@@ -61,6 +69,9 @@ export default () => {
             </NavLink>
           </div>
         )}
+        {isAuth && <NavLink to='/profile'>
+                      <img src={avatar} alt='' className='navbar__avatar' />
+                    </NavLink> }
       </div>
     </div>
   );
